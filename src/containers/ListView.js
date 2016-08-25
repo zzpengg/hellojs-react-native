@@ -5,6 +5,7 @@ import {
   ListView,
   Text,
   Alert,
+  AsyncStorage,
 } from 'react-native';
 import { Actions } from 'react-native-router-flux';
 import pokemon from '../utils/pokemons';
@@ -35,6 +36,11 @@ export default class hellojs extends Component {
     navigator.geolocation.getCurrentPosition(
       (position) => {
         console.log(position);
+        AsyncStorage.setItem('position', JSON.stringify(position), () => {
+          AsyncStorage.getItem('position', (err, result) => {
+            console.log("!!!!!!!!!!!!!!", result);
+          });
+        });
       },
       (error) => Alert.alert(error.message),
       {enableHighAccuracy: true, timeout: 20000, maximumAge: 1000}
@@ -42,6 +48,7 @@ export default class hellojs extends Component {
     this.watchID = navigator.geolocation.watchPosition((position) => {
       console.log(position);
     });
+
   }
 
   render() {
