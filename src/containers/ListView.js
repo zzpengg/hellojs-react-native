@@ -30,6 +30,20 @@ export default class hellojs extends Component {
       dataSource: ds.cloneWithRows(pokemon),
     };
   }
+
+  componentDidMount() {
+    navigator.geolocation.getCurrentPosition(
+      (position) => {
+        console.log(position);
+      },
+      (error) => Alert.alert(error.message),
+      {enableHighAccuracy: true, timeout: 20000, maximumAge: 1000}
+    );
+    this.watchID = navigator.geolocation.watchPosition((position) => {
+      console.log(position);
+    });
+  }
+
   render() {
     return (
       <View style={styles.container}>
