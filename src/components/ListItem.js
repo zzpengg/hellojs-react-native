@@ -22,7 +22,9 @@ const styles = StyleSheet.create({
 
 export default function ListItem(props) {
   return (
-    <TouchableOpacity style={styles.container}>
+    <TouchableOpacity style={styles.container} onPress={() => {
+        props.onPress(`You click ${props.name}`);
+      }}>
       <Image source={{ uri: props.img }} style={{ height: 100, width: 100 }} />
       <View style={styles.info}>
         <Text style={{ fontWeight: '500', fontSize: 20 }}>
@@ -35,11 +37,12 @@ export default function ListItem(props) {
 }
 
 ListItem.propTypes = {
-  id: React.PropTypes.number,
+  id: React.PropTypes.string,
   img: React.PropTypes.string,
   num: React.PropTypes.string,
   name: React.PropTypes.string,
   type: React.PropTypes.string,
+  onPress: React.PropTypes.func,
 };
 
 ListItem.defaultProps = {
@@ -48,4 +51,5 @@ ListItem.defaultProps = {
   num: '',
   name: '',
   type: '',
+  onPress: () => {},
 };
