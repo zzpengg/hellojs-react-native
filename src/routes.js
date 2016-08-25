@@ -44,7 +44,7 @@ export default class AppRoutes extends Component {
   render() {
     return (
       <Router getSceneStyle={getSceneStyle}>
-        <Scene key="root">
+        <Scene key="root" hideNavBar>
           <Scene key="Hellojs" component={Hellojs} title="Hellojs" />
           <Scene key="Hellojs2" component={Hellojs2} title="Hellojs2" />
           <Scene key="ListView" component={ListView} title="ListView" initial />

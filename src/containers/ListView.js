@@ -6,6 +6,8 @@ import {
   Text,
   Alert,
   AsyncStorage,
+  Navigator,
+  TouchableOpacity
 } from 'react-native';
 import { Actions } from 'react-native-router-flux';
 import pokemon from '../utils/pokemons';
@@ -15,6 +17,7 @@ import ListItem from '../components/ListItem';
 const styles = StyleSheet.create({
   container: {
     flex: 1,
+    marginTop: 62,
   },
 });
 
@@ -51,26 +54,83 @@ export default class hellojs extends Component {
 
   }
 
+  renderScene = (route, navigator) => {
+    switch (route.id) {
+      case 'detail':
+      console.log("!!!!!!!!!!!", route);
+        return (
+          <ListItem
+            initialListSize={10}
+            onPress={(string) => {
+              Alert.alert(string);
+            }}
+            id={route.id}
+            img={route.img}
+            num={route.num}
+            name={route.name}
+            type={route.type}
+            navigator={navigator}
+          />
+        );
+        break;
+      default:
+        return (
+          <View style={styles.container}>
+            <ListView
+              dataSource={this.state.dataSource}
+              renderRow={(rowData) => {
+                return <ListItem
+                  initialListSize={10}
+                  onPress={(string) => {
+                    // Alert.alert(string);
+                    navigator.push({...rowData, id: 'detail'});
+                  }}
+                  id={rowData.id}
+                  img={rowData.img}
+                  num={rowData.num}
+                  name={rowData.name}
+                  type={rowData.type}
+                />;
+              }}
+            />
+          </View>
+        );
+    }
+  }
+
   render() {
     return (
-      <View style={styles.container}>
-        <ListView
-          dataSource={this.state.dataSource}
-          renderRow={(rowData) => {
-            return <ListItem
-              initialListSize={10}
-              onPress={(string) => {
-                Alert.alert(string);
-              }}
-              id={rowData.id}
-              img={rowData.img}
-              num={rowData.num}
-              name={rowData.name}
-              type={rowData.type}
-            />
-          }}
-        />
-      </View>
+      <Navigator
+        style={{ flex: 1 }}
+        initialRoute={{}}
+        renderScene={this.renderScene}
+        navigationBar={
+          <Navigator.NavigationBar
+            routeMapper={{
+              LeftButton: (route, navigator, index, navState) => {
+                return (
+                  <TouchableOpacity
+                    style={{ flex: 1, justifyContent: 'center' }}
+                    onPress={() => navigator.pop()}>
+                    <Text>Back</Text>
+                  </TouchableOpacity>
+                );
+              },
+              RightButton: () => {},
+              Title: (route, navigator, index, navState) => {
+                return (
+                  <View style={{ flex: 1, justifyContent: 'center', backgroundColor: 'red'}}>
+                    <Text style={{ textAlign: 'center' }}>
+                      {route.name || 'Pokemon'}
+                    </Text>
+                  </View>
+                );
+              },
+            }}
+             style={{ backgroundColor: 'lightblue' }}
+          />
+        }
+      />
     );
   }
 }
