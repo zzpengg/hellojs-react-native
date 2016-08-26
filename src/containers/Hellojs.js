@@ -3,10 +3,13 @@ import {
   StyleSheet,
   Text,
   View,
+  ListView,
   TouchableOpacity,
 } from 'react-native';
 import { Actions } from 'react-native-router-flux';
 import DefaultComponent from '../components/DefaultComponent';
+import ListItem from '../components/ListItem';
+import pokemons from '../utils/pokemons';
 
 const styles = StyleSheet.create({
   container: {
@@ -22,12 +25,29 @@ const styles = StyleSheet.create({
   },
 });
 
+
 export default class hellojs extends Component {
+  constructor(props){
+    super(props);
+    let ds = new ListView.DataSource({
+      rowHasChanged: (r1, r2) => r1 !== r2
+    });
+    this.state = {
+      dataSource: ds.cloneWithRows(pokemons),
+    };
+  }
+  
+  
   render() {
     return (
-      <View style={styles.container}>
-        <DefaultComponent title={'123'} />
-      </View>
+      <ListView 
+        dataSource={this.state.dataSource}
+        renderRow={(rowData) => {
+          return (
+            <ListItem img={rowData.img} name={rowData.name} type={rowData.type} />
+          );
+        }}
+      />
     );
   }
 }
