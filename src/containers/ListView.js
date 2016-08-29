@@ -19,6 +19,15 @@ const styles = StyleSheet.create({
     flex: 1,
     marginTop: 62,
   },
+  poke: {
+    flex: 1, 
+    justifyContent: 'center', 
+    backgroundColor: 'pink' , 
+    flexDirection: 'row',
+    borderWidth: 2,
+    height: 100,
+    padding: 15,
+  },
 });
 
 export default class hellojs extends Component {
@@ -119,10 +128,15 @@ export default class hellojs extends Component {
               RightButton: () => {},
               Title: (route, navigator, index, navState) => {
                 return (
-                  <View style={{ flex: 1, justifyContent: 'center', backgroundColor: 'red'}}>
-                    <Text style={{ textAlign: 'center' }}>
-                      {route.name || 'Pokemon'}
+                  <View style={ styles.poke }>
+                    <Text style={{ textAlign: 'center' , borderWidth: 20}}>
+                      {route.name|| 'pokemon' }
                     </Text>
+                    <TouchableOpacity>
+                      <Text style={{ textAlign: 'center' }}>
+                        { 'Attributes'}
+                      </Text>
+                    </TouchableOpacity>
                   </View>
                 );
               },

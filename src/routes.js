@@ -35,7 +35,7 @@ const getSceneStyle = (props, computedProps) => {
   return style;
 };
 
-export default class AppRoutes extends Component {
+class AppRoutes extends Component {
   constructor(props) {
     super(props);
     this.state = {};
