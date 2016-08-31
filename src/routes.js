@@ -54,4 +54,4 @@ class AppRoutes extends Component {
   }
 }
 
-export default connect()(AppRoutes);
+connect()(AppRoutes);

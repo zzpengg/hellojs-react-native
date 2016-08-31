@@ -70,14 +70,17 @@ export default class hellojs extends Component {
         return (
           <ListItem
             initialListSize={10}
-            onPress={(string) => {
-              Alert.alert(string);
+            onPress={(string,string2) => {
+              Alert.alert(string,string2);
             }}
             id={route.id}
             img={route.img}
             num={route.num}
             name={route.name}
             type={route.type}
+            height={route.height}
+            weight={route.weight}
+            candy={route.candy}
             navigator={navigator}
           />
         );
@@ -99,6 +102,9 @@ export default class hellojs extends Component {
                   num={rowData.num}
                   name={rowData.name}
                   type={rowData.type}
+                  height={rowData.height}
+                  weight={rowData.weight}
+                  candy={rowData.candy}
                 />;
               }}
             />
