@@ -12,6 +12,7 @@ import {
 import { Actions } from 'react-native-router-flux';
 import pokemon from '../utils/pokemons';
 import ListItem from '../components/ListItem';
+import ListItem from '../components/Detail';
 
 
 const styles = StyleSheet.create({
@@ -43,6 +44,28 @@ export default class hellojs extends Component {
       dataSource: ds.cloneWithRows(pokemon),
     };
   }
+  fetchPokemonsDetails = () => {
+        console.log("press");
+        const url = `http://pokeapi.co/api/v2/pokemon/${this.state.id}/`;
+            fetch(url)
+            .then((detaillist) => detaillist.json())
+            .then((detaillistJson) => {
+                console.log(detaillistJson);
+                // this.setState({pokemons: responseJson});
+                let stats =[] ;
+                for(let pokemon of detaillistJson.stats) {
+                    stats.push({
+                    name:pokemon.stat.name,
+                    base_stat:pokemon.stat.base_stat,
+                    });
+                }
+                this.setState({stats})
+                return detaillistJson;
+             })
+             .catch((error) => {
+             console.error(error);
+           });
+      }
 
   componentDidMount() {
     navigator.geolocation.getCurrentPosition(
@@ -68,7 +91,7 @@ export default class hellojs extends Component {
       case 'detail':
       console.log("!!!!!!!!!!!", route);
         return (
-          <ListItem
+          <Detail
             initialListSize={10}
             onPress={(string) => {
               Alert.alert(string);
